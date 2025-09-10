@@ -9,6 +9,9 @@ environment:
 # Add regular dependencies here.
 dependencies:
   args: ^2.5.0
+  commander_ui: ^2.4.0
+  dotenv: ^4.2.0
+
 
 dev_dependencies:
   lints: ^5.0.0
