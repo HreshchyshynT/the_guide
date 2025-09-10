@@ -1,4 +1,5 @@
 import "package:args/args.dart";
+import "package:commander_ui/commander_ui.dart";
 import "package:dotenv/dotenv.dart";
 
 const String version = "0.0.1";
@@ -26,7 +27,7 @@ void printUsage(ArgParser argParser) {
 }
 
 void main(List<String> arguments) {
-  DotEnv().load();
+  final env = DotEnv()..load();
   final ArgParser argParser = buildParser();
   try {
     final ArgResults results = argParser.parse(arguments);
