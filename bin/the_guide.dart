@@ -1,6 +1,6 @@
 import "package:args/args.dart";
-import "package:commander_ui/commander_ui.dart";
 import "package:dotenv/dotenv.dart";
+import "package:the_guide/app_config.dart";
 
 const String version = "0.0.1";
 
@@ -26,12 +26,25 @@ void printUsage(ArgParser argParser) {
   print(argParser.usage);
 }
 
-void main(List<String> arguments) {
+AppConfig _initAppConfig(ArgResults args) {
   final env = DotEnv()..load();
+  final apiKey = env["GEMINI_KEY"];
+  assert(apiKey != null, "gemini api key must be provided");
+  bool verbose = false;
+  if (args.flag("verbose")) {
+    verbose = true;
+  }
+  return AppConfig(
+    geminiApiKey: apiKey!,
+    verbose: verbose,
+  );
+}
+
+void main(List<String> arguments) {
   final ArgParser argParser = buildParser();
+  late final AppConfig appConfig;
   try {
     final ArgResults results = argParser.parse(arguments);
-    bool verbose = false;
 
     // Process the parsed arguments.
     if (results.flag("help")) {
@@ -42,13 +55,11 @@ void main(List<String> arguments) {
       print("the_guide version: $version");
       return;
     }
-    if (results.flag("verbose")) {
-      verbose = true;
-    }
+    appConfig = _initAppConfig(results);
 
     // Act on the arguments provided.
     print("Positional arguments: ${results.rest}");
-    if (verbose) {
+    if (appConfig.verbose) {
       print("[VERBOSE] All arguments: ${results.arguments}");
     }
   } on FormatException catch (e) {
@@ -56,5 +67,6 @@ void main(List<String> arguments) {
     print(e.message);
     print("");
     printUsage(argParser);
+    return;
   }
 }
