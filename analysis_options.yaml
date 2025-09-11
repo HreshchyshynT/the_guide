@@ -16,6 +16,9 @@ analyzer:
     - "**/*.pbenum.dart"
     - "**/*.pbgrpc.dart"
     - "**/*.pbjson.dart"
+  errors:
+    invalid_annotation_target: ignore
+
 
 linter:
   # The lint rules applied to this project can be customized in the
@@ -63,3 +66,8 @@ linter:
     exhaustive_cases: true
 
     unnecessary_this: false
+
+
+formatter:
+  trailing_commas: preserve
+
