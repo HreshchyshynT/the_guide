@@ -1,6 +1,9 @@
+import "dart:io";
+
 import "package:args/args.dart";
 import "package:dotenv/dotenv.dart";
 import "package:the_guide/app_config.dart";
+import "package:commander_ui/commander_ui.dart";
 
 const String version = "0.0.1";
 
@@ -40,7 +43,18 @@ AppConfig _initAppConfig(ArgResults args) {
   );
 }
 
-void main(List<String> arguments) {
+void runApp(AppConfig config) {
+  final commander = Commander();
+  final screen = commander.screen(title: "The Guide");
+
+  try {
+    screen.enter();
+  } finally {
+    screen.leave();
+  }
+}
+
+void main(List<String> arguments) async {
   final ArgParser argParser = buildParser();
   late final AppConfig appConfig;
   try {
@@ -69,4 +83,6 @@ void main(List<String> arguments) {
     printUsage(argParser);
     return;
   }
+
+  runApp(appConfig);
 }
