@@ -1,7 +1,9 @@
 import "package:dotenv/dotenv.dart";
 
 class AppConfig {
-  AppConfig._({required this.geminiApiKey});
+  AppConfig._({
+    required this.geminiApiKey,
+  });
 
   static AppConfig? _instance;
 
