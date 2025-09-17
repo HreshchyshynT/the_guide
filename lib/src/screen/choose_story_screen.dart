@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:the_guide/src/common/msg_constants.dart";
 import "package:the_guide/src/model/story_intro.dart";
+import "package:the_guide/src/screen/character_name_screen.dart";
 import "package:the_guide/src/widget/story_intro_widget.dart";
 
 class ChooseStoryScreen extends StatefulWidget {
@@ -43,8 +44,12 @@ class _ChooseStoryScreenState extends State<ChooseStoryScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: StoryIntroWidget(
                     key: ValueKey(_storyIntros[i]),
-                    onTap: (story) {
+                    onTap: (intro) {
                       // TODO: display confirmation popup before moving forward
+                      CharacterNameScreen.pushReplacement(
+                        context,
+                        intro: intro,
+                      );
                     },
                     intro: _storyIntros[i],
                   ),

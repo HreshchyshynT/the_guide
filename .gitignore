@@ -4,6 +4,11 @@
 ### Dart ###
 # See https://www.dartlang.org/guides/libraries/private-files
 
+# generated files 
+*.g.dart
+*.freezed.dart
+
+
 # Files and directories created by pub
 .dart_tool/
 .packages

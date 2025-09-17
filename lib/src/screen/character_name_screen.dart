@@ -1,4 +1,7 @@
 import "package:flutter/material.dart";
+import "package:the_guide/src/ai/ai_client.dart";
+import "package:the_guide/src/common/prompts.dart";
+import "package:the_guide/src/model/app_config.dart";
 import "package:the_guide/src/model/story_intro.dart";
 
 class CharacterNameScreen extends StatefulWidget {
@@ -54,5 +57,19 @@ class _CharacterNameScreenState extends State<CharacterNameScreen> {
     );
   }
 
-  void _generateIntroduction() {}
+  void _generateIntroduction() {
+    final client = AiClient(apiKey: AppConfig.instance.geminiApiKey);
+    client
+        .generateContent(
+          Prompts.getStoryIntroductionPrompt(widget.intro),
+        )
+        .then(
+          (response) => setState(() {
+            story = response;
+          }),
+          onError: (e) => setState(() {
+            story = "Error: $e";
+          }),
+        );
+  }
 }
