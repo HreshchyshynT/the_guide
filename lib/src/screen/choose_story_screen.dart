@@ -60,19 +60,19 @@ class _ChooseStoryScreenState extends State<ChooseStoryScreen> {
 
 final List<StoryIntro> _storyIntros = [
   // Mythical & Fantasy
-  StoryIntro(
+  const StoryIntro(
     title: "The Oracle's Defiance",
     genre: "Mythical Greece",
     description:
         "In the sun-drenched city-state of Thrylos, you are a celebrated warrior. The Oracle has spoken a grim prophecy: you will cause the city's downfall. The gods have sealed your fate, but you have other plans. Will you flee your home or stand and fight destiny itself?",
   ),
-  StoryIntro(
+  const StoryIntro(
     title: "Echoes of the Deep Mountain",
     genre: "Dwarven Fantasy",
     description:
         "Ages ago, the great Dwarven kingdom of your ancestors was lost to goblin hordes. Armed with a tattered map and an unyielding grudge, you lead a small company to reclaim your lost legacy from the shadowed things that now dwell within the mountain's heart.",
   ),
-  StoryIntro(
+  const StoryIntro(
     title: "The Crown of Ash",
     genre: "Low-Magic Political Fantasy",
     description:
@@ -80,19 +80,19 @@ final List<StoryIntro> _storyIntros = [
   ),
 
   // Sci-Fi
-  StoryIntro(
+  const StoryIntro(
     title: "The Last Spark",
     genre: "Space Opera (Outer Rim)",
     description:
         "On a forgotten desert moon, you make a living scavenging imperial wrecks. You've just uncovered a hidden vault containing an ancient lightfoil. Moments later, the scream of TIE fighters echoes from above. The Empire knows. You have to run.",
   ),
-  StoryIntro(
+  const StoryIntro(
     title: "Chrome and Shadow",
     genre: "Cyberpunk Noir",
     description:
         "In the rain-slicked, neon-lit streets of Neo-Alexandria 2077, you're a private investigator with more cybernetic debts than clients. A shadowy corporate figure tasks you with finding a rogue android that has stolen sensitive data. The trail begins in the underbelly of the city, where life is cheap.",
   ),
-  StoryIntro(
+  const StoryIntro(
     title: "The Sun-Scorched Road",
     genre: "Post-Apocalyptic Survival",
     description:
@@ -100,19 +100,19 @@ final List<StoryIntro> _storyIntros = [
   ),
 
   // Modern & Pop Culture
-  StoryIntro(
+  const StoryIntro(
     title: "The Emergence",
     genre: "Modern Superhero Origin",
     description:
         "A mysterious energy wave pulsed across the globe, granting a fraction of the population incredible powers. You've just discovered yours. As newfound heroes and villains clash in the streets, you must decide: do you hide, seek fame, or protect the innocent?",
   ),
-  StoryIntro(
+  const StoryIntro(
     title: "The Serpent's Coil Academy",
     genre: "Magical School / Dark Academia",
     description:
         "As a first-year student at a hidden school of magic, you've stumbled upon a conspiracy. A secret society is operating within the school's ancient walls, and they seem to have taken an interest in you beyond your grades in Potion-making.",
   ),
-  StoryIntro(
+  const StoryIntro(
     title: "The Crown of Ash",
     genre: "Low-Magic Political Fantasy (Game of Thrones-esque)",
     description:
