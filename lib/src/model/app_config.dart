@@ -19,7 +19,7 @@ class AppConfig {
 
   static void init() async {
     await dotenv.load();
-    const apiKey = String.fromEnvironment("GEMINI_KEY");
+    final apiKey = dotenv.env["GEMINI_KEY"] as String;
 
     assert(apiKey.isNotEmpty, "gemini api key must be provided");
 
