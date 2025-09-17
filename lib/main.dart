@@ -1,7 +1,9 @@
 import "package:flutter/material.dart";
+import "package:the_guide/src/model/app_config.dart";
 import "package:the_guide/src/screen/welcome_screen.dart";
 
 void main() {
+  AppConfig.init();
   runApp(const MyApp());
 }
 

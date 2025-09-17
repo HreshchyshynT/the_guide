@@ -1,4 +1,4 @@
-import "package:dotenv/dotenv.dart";
+import "package:flutter_dotenv/flutter_dotenv.dart";
 
 class AppConfig {
   AppConfig._({
@@ -7,7 +7,7 @@ class AppConfig {
 
   static AppConfig? _instance;
 
-  AppConfig get instance {
+  static AppConfig get instance {
     final obj = _instance;
     if (obj == null) {
       throw Exception("AppConfig is not initialized");
@@ -17,14 +17,14 @@ class AppConfig {
 
   final String geminiApiKey;
 
-  static void init() {
-    final env = DotEnv()..load();
-    final apiKey = env["GEMINI_KEY"];
+  static void init() async {
+    await dotenv.load();
+    const apiKey = String.fromEnvironment("GEMINI_KEY");
 
-    assert(apiKey != null, "gemini api key must be provided");
+    assert(apiKey.isNotEmpty, "gemini api key must be provided");
 
     _instance = AppConfig._(
-      geminiApiKey: apiKey!,
+      geminiApiKey: apiKey,
     );
   }
 }
