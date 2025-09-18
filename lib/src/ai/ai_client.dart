@@ -20,6 +20,11 @@ class AiClient {
       contents: [
         Content(parts: [Part(text: prompt)]),
       ],
+      generationConfig: const GenerationConfig(
+        thinkingConfig: ThinkingConfig(
+          thinkingBudget: 0,
+        ),
+      ),
     );
     final response = await http
         .post(

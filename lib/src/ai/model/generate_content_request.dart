@@ -25,8 +25,20 @@ abstract class GenerationConfig with _$GenerationConfig {
     int? maxOutputTokens,
     double? topP,
     int? topK,
+    ThinkingConfig? thinkingConfig,
   }) = _GenerationConfig;
 
   factory GenerationConfig.fromJson(Map<String, dynamic> json) =>
       _$GenerationConfigFromJson(json);
+}
+
+@freezed
+abstract class ThinkingConfig with _$ThinkingConfig {
+  const factory ThinkingConfig({
+    bool? includeThoughts,
+    int? thinkingBudget,
+  }) = _ThinkingConfig;
+
+  factory ThinkingConfig.fromJson(Map<String, dynamic> json) =>
+      _$ThinkingConfigFromJson(json);
 }
