@@ -33,6 +33,10 @@ class _CharacterNameScreenState extends State<CharacterNameScreen> {
   String? story;
   late final TextEditingController editTextController = TextEditingController();
 
+  final FocusNode editTextFocusNode = FocusNode();
+
+  bool isInputVisible = false;
+
   @override
   void initState() {
     super.initState();
@@ -66,20 +70,41 @@ class _CharacterNameScreenState extends State<CharacterNameScreen> {
                       child: CircularProgressIndicator(),
                     ),
             ),
-            EditText(
-              hintText: "Enter your name",
-              textInputAction: TextInputAction.done,
-              controller: editTextController,
-              onEditingComplete: () async {
-                FocusScope.of(context).unfocus();
-                final name = editTextController.text;
-                // TODO: add min length limitation
-                if (name.isEmpty) return;
-                final confirmed = await _displayConfirmStartDialog(name);
-                if (confirmed == true) {
-                  // TODO: move on
-                }
-              },
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 40.0,
+                vertical: 24.0,
+              ),
+              child: SizedBox(
+                width: 240.0,
+                child: AnimatedOpacity(
+                  duration: const Duration(milliseconds: 400),
+                  opacity: isInputVisible ? 1.0 : 0.0,
+                  child: EditText(
+                    hintText: "Enter your name",
+                    textInputAction: TextInputAction.done,
+                    controller: editTextController,
+                    contentPadding: const EdgeInsets.all(16.0),
+                    focusNode: editTextFocusNode,
+                    inputBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(),
+                    ),
+                    onEditingComplete: () async {
+                      editTextFocusNode.unfocus();
+                      final name = editTextController.text;
+                      // TODO: add min length limitation
+                      if (name.isEmpty) return;
+                      final confirmed = await _displayConfirmStartDialog(name);
+                      if (confirmed == true) {
+                        // TODO: move on
+                      } else {
+                        editTextFocusNode.requestFocus();
+                        _requestFocus().ignore();
+                      }
+                    },
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -119,15 +144,30 @@ class _CharacterNameScreenState extends State<CharacterNameScreen> {
     final client = AiClient(apiKey: AppConfig.instance.geminiApiKey);
     client
         .generateContent(
-          Prompts.getStoryIntroductionPrompt(widget.intro),
-        )
+      Prompts.getStoryIntroductionPrompt(widget.intro),
+    )
         .then(
-          (response) => setState(() {
-            story = response;
-          }),
-          onError: (e) => setState(() {
-            story = "Error: $e";
-          }),
-        );
+      (response) async {
+        setState(() {
+          story = response;
+        });
+        await Future.delayed(const Duration(seconds: 5));
+        setState(() {
+          isInputVisible = true;
+          editTextFocusNode.requestFocus();
+        });
+      },
+      onError: (e) => setState(() {
+        story = "Error: $e";
+      }),
+    );
+  }
+
+  Future<void> _requestFocus() async {
+    editTextFocusNode.requestFocus();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      editTextController.selection =
+          TextSelection.collapsed(offset: editTextController.text.length);
+    });
   }
 }

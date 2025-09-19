@@ -21,6 +21,9 @@ class EditText extends StatelessWidget {
     this.textInputAction,
     this.onEditingComplete,
     this.contentPadding = EdgeInsets.zero,
+    this.isDense = true,
+    this.inputBorder = InputBorder.none,
+    this.focusNode,
   });
 
   final int? maxInputLength;
@@ -40,6 +43,9 @@ class EditText extends StatelessWidget {
   final TextInputAction? textInputAction;
   final VoidCallback? onEditingComplete;
   final EdgeInsets contentPadding;
+  final bool isDense;
+  final InputBorder inputBorder;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -59,16 +65,17 @@ class EditText extends StatelessWidget {
       textAlignVertical: TextAlignVertical.center,
       decoration: InputDecoration(
         hintText: hintText,
-        isDense: true,
+        isDense: isDense,
         contentPadding: contentPadding,
         hintStyle: hintStyle,
-        border: InputBorder.none,
+        border: inputBorder,
         suffixIcon: suffixIcon,
         suffixIconColor: suffixIconColor,
       ),
       autofillHints: autofillHints,
       textInputAction: textInputAction,
       onEditingComplete: onEditingComplete,
+      focusNode: focusNode,
     );
   }
 }
