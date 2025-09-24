@@ -1,14 +1,19 @@
-import "package:freezed_annotation/freezed_annotation.dart";
 import "package:the_guide/src/model/chapter.dart";
 import "package:the_guide/src/model/story_intro.dart";
 
-part "game_state.freezed.dart";
+class GameState {
+  GameState({
+    required this.intro,
+    this.characterName,
+    List<Chapter> completedChapters = const [],
+  }) : _chapters = completedChapters;
 
-@freezed
-abstract class GameState with _$GameState {
-  const factory GameState({
-    required StoryIntro intro,
-    @Default([]) List<Chapter> completedChapters,
-    String? characterName,
-  }) = _GameState;
+  final StoryIntro intro;
+  final List<Chapter> _chapters;
+
+  String? characterName;
+
+  List<Chapter> get chapters => List.unmodifiable(_chapters);
+
+  int get chaptersCount => _chapters.length;
 }

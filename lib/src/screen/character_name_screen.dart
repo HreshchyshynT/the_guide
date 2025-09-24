@@ -1,9 +1,13 @@
 import "package:flutter/material.dart";
+import "package:provider/provider.dart";
 import "package:the_guide/src/ai/ai_client.dart";
-import "package:the_guide/src/common/prompts.dart";
+import "package:the_guide/src/prompt/intro_prompt.dart";
 import "package:the_guide/src/model/app_config.dart";
+import "package:the_guide/src/model/game_state.dart";
 import "package:the_guide/src/model/story_intro.dart";
 import "package:the_guide/src/widget/edit_text.dart";
+import "package:the_guide/src/widget/guide_progress_widget.dart";
+import "package:the_guide/src/widget/llm_text_widget.dart";
 
 class CharacterNameScreen extends StatefulWidget {
   const CharacterNameScreen({
@@ -18,8 +22,11 @@ class CharacterNameScreen extends StatefulWidget {
   }) {
     return Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => CharacterNameScreen(
-          intro: intro,
+        builder: (context) => Provider(
+          create: (_) => GameState(intro: intro),
+          child: CharacterNameScreen(
+            intro: intro,
+          ),
         ),
       ),
     );
@@ -65,9 +72,9 @@ class _CharacterNameScreenState extends State<CharacterNameScreen> {
           children: [
             Expanded(
               child: story != null
-                  ? Text(story)
+                  ? LlmTextWidget(text: story)
                   : const Center(
-                      child: CircularProgressIndicator(),
+                      child: GuideProgressWidget(),
                     ),
             ),
             Padding(
@@ -144,7 +151,7 @@ class _CharacterNameScreenState extends State<CharacterNameScreen> {
     final client = AiClient(apiKey: AppConfig.instance.geminiApiKey);
     client
         .generateContent(
-      Prompts.getStoryIntroductionPrompt(widget.intro),
+      getStoryIntroPrompt(widget.intro),
     )
         .then(
       (response) async {

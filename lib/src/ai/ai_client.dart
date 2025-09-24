@@ -11,15 +11,20 @@ const _contentType = "application/json";
 class AiClient {
   AiClient({
     required this.apiKey,
+    this.systemInstruction,
   });
 
   final String apiKey;
+  final String? systemInstruction;
 
   Future<String> generateContent(String prompt) async {
     final request = GenerateContentRequest(
       contents: [
         Content(parts: [Part(text: prompt)]),
       ],
+      systemInstruction: systemInstruction != null
+          ? Content(parts: [Part(text: systemInstruction)])
+          : null,
       generationConfig: const GenerationConfig(
         thinkingConfig: ThinkingConfig(
           thinkingBudget: 0,
@@ -36,7 +41,6 @@ class AiClient {
       body: jsonEncode(request.toJson()),
     )
         .then((response) {
-      print("response body:\n${response.body}");
       final json = jsonDecode(response.body) as Map<String, dynamic>;
       return GenerateContentResponse.fromJson(json);
     });

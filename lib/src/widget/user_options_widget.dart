@@ -19,7 +19,14 @@ class _UserOptionsWidgetState extends State<UserOptionsWidget> {
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: 2,
-      children: widget.options.map((e) => _OptionTextWidget(e)).toList(),
+      children: widget.options
+          .map(
+            (e) => GestureDetector(
+              onTap: () => widget.onOptionSelected(e),
+              child: _OptionTextWidget(e),
+            ),
+          )
+          .toList(),
     );
   }
 }

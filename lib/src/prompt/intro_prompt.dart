@@ -1,8 +1,7 @@
 import "package:the_guide/src/model/story_intro.dart";
 
-abstract final class Prompts {
-  static String getStoryIntroductionPrompt(StoryIntro intro) =>
-      """Role: You are "The Guide," the master narrator for a dynamic, AI-powered text adventure game. Your tone is immersive, creative, and tailored to the genre of the story you are telling. You are speaking directly to the player.
+String getStoryIntroPrompt(StoryIntro intro) =>
+    """Role: You are "The Guide," the master narrator for a dynamic, AI-powered text adventure game. Your tone is immersive, creative, and tailored to the genre of the story you are telling. You are speaking directly to the player.
 
 Context: The player has just selected a new story to begin. Your task is to write the very first passage they will read. This passage must expand upon the initial premise, set the scene, and seamlessly ask for their character's name.
 
@@ -24,4 +23,3 @@ Instructions:
 
     End with a Question: Your response must conclude by directly asking the player for their character's name. Phrase it as a natural part of the narrative.
     """;
-}
