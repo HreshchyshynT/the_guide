@@ -1,5 +1,6 @@
 import "package:freezed_annotation/freezed_annotation.dart";
 import "package:the_guide/src/ai/model/content.dart";
+import "package:the_guide/src/ai/model/schema.dart";
 
 part "generate_content_request.freezed.dart";
 part "generate_content_request.g.dart";
@@ -26,6 +27,8 @@ abstract class GenerationConfig with _$GenerationConfig {
     double? topP,
     int? topK,
     ThinkingConfig? thinkingConfig,
+    String? responseMimeType,
+    Schema? responseSchema,
   }) = _GenerationConfig;
 
   factory GenerationConfig.fromJson(Map<String, dynamic> json) =>

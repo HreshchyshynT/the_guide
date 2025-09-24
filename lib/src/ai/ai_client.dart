@@ -5,6 +5,7 @@ import "package:the_guide/src/ai/model/content.dart";
 import "package:the_guide/src/ai/model/generate_content_request.dart";
 import "package:the_guide/src/ai/model/generate_content_response.dart";
 import "package:the_guide/src/ai/model/part.dart";
+import "package:the_guide/src/ai/model/schema.dart";
 
 const _contentType = "application/json";
 
@@ -12,10 +13,12 @@ class AiClient {
   AiClient({
     required this.apiKey,
     this.systemInstruction,
+    this.structuredOutput,
   });
 
   final String apiKey;
   final String? systemInstruction;
+  final Schema? structuredOutput;
 
   Future<String> generateContent(String prompt) async {
     final request = GenerateContentRequest(
@@ -25,10 +28,12 @@ class AiClient {
       systemInstruction: systemInstruction != null
           ? Content(parts: [Part(text: systemInstruction)])
           : null,
-      generationConfig: const GenerationConfig(
-        thinkingConfig: ThinkingConfig(
+      generationConfig: GenerationConfig(
+        thinkingConfig: const ThinkingConfig(
           thinkingBudget: 0,
         ),
+        responseMimeType: structuredOutput != null ? "application/json" : null,
+        responseSchema: structuredOutput,
       ),
     );
     final response = await http
