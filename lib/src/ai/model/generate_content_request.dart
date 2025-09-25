@@ -7,6 +7,7 @@ part "generate_content_request.g.dart";
 
 @freezed
 abstract class GenerateContentRequest with _$GenerateContentRequest {
+  @JsonSerializable(includeIfNull: false)
   const factory GenerateContentRequest({
     required List<Content> contents,
     Content? systemInstruction,
@@ -19,6 +20,7 @@ abstract class GenerateContentRequest with _$GenerateContentRequest {
 
 @freezed
 abstract class GenerationConfig with _$GenerationConfig {
+  @JsonSerializable(includeIfNull: false)
   const factory GenerationConfig({
     int? candidateCount,
     List<String>? stopSequences,
@@ -37,6 +39,7 @@ abstract class GenerationConfig with _$GenerationConfig {
 
 @freezed
 abstract class ThinkingConfig with _$ThinkingConfig {
+  @JsonSerializable(includeIfNull: false)
   const factory ThinkingConfig({
     bool? includeThoughts,
     int? thinkingBudget,

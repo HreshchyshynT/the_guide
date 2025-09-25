@@ -1,5 +1,6 @@
 import "dart:convert";
 
+import "package:flutter/material.dart";
 import "package:http/http.dart" as http;
 import "package:the_guide/src/ai/model/content.dart";
 import "package:the_guide/src/ai/model/generate_content_request.dart";
@@ -21,6 +22,7 @@ class AiClient {
   final Schema? structuredOutput;
 
   Future<String> generateContent(String prompt) async {
+    debugPrint("generating content");
     final request = GenerateContentRequest(
       contents: [
         Content(parts: [Part(text: prompt)]),
@@ -36,6 +38,8 @@ class AiClient {
         responseSchema: structuredOutput,
       ),
     );
+    final jsonRequest = jsonEncode(request.toJson());
+    print("json request:\n$jsonRequest");
     final response = await http
         .post(
       getUrl(),
@@ -43,12 +47,14 @@ class AiClient {
         "Content-type": _contentType,
         "x-goog-api-key": apiKey,
       },
-      body: jsonEncode(request.toJson()),
+      body: jsonRequest,
     )
         .then((response) {
       final json = jsonDecode(response.body) as Map<String, dynamic>;
       return GenerateContentResponse.fromJson(json);
     });
+
+    debugPrint("content generated");
 
     // TODO: handle properly
     return response.candidates

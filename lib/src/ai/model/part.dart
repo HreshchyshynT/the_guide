@@ -5,10 +5,10 @@ part "part.g.dart";
 
 @freezed
 abstract class Part with _$Part {
+  @JsonSerializable(includeIfNull: false)
   const factory Part({
     String? text,
   }) = _Part;
 
   factory Part.fromJson(Map<String, dynamic> json) => _$PartFromJson(json);
 }
-

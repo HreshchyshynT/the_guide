@@ -6,6 +6,7 @@ part "content.g.dart";
 
 @freezed
 abstract class Content with _$Content {
+  @JsonSerializable(includeIfNull: false)
   const factory Content({
     required List<Part> parts,
     String? role,

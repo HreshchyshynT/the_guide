@@ -22,6 +22,7 @@ enum SchemaType {
 abstract class Schema with _$Schema {
   const Schema._();
 
+  @JsonSerializable(includeIfNull: false)
   const factory Schema({
     required SchemaType type,
     String? format,

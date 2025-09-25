@@ -6,6 +6,7 @@ part "generate_content_response.g.dart";
 
 @freezed
 abstract class GenerateContentResponse with _$GenerateContentResponse {
+  @JsonSerializable(includeIfNull: false)
   const factory GenerateContentResponse({
     List<Candidate>? candidates,
     PromptFeedback? promptFeedback,
@@ -18,6 +19,7 @@ abstract class GenerateContentResponse with _$GenerateContentResponse {
 
 @freezed
 abstract class Candidate with _$Candidate {
+  @JsonSerializable(includeIfNull: false)
   const factory Candidate({
     Content? content,
     String? finishReason,
@@ -31,6 +33,7 @@ abstract class Candidate with _$Candidate {
 
 @freezed
 abstract class SafetyRating with _$SafetyRating {
+  @JsonSerializable(includeIfNull: false)
   const factory SafetyRating({
     String? category,
     String? probability,
@@ -42,6 +45,7 @@ abstract class SafetyRating with _$SafetyRating {
 
 @freezed
 abstract class PromptFeedback with _$PromptFeedback {
+  @JsonSerializable(includeIfNull: false)
   const factory PromptFeedback({
     String? blockReason,
     List<SafetyRating>? safetyRatings,
@@ -53,6 +57,7 @@ abstract class PromptFeedback with _$PromptFeedback {
 
 @freezed
 abstract class UsageMetadata with _$UsageMetadata {
+  @JsonSerializable(includeIfNull: false)
   const factory UsageMetadata({
     int? promptTokenCount,
     int? candidatesTokenCount,
