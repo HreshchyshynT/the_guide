@@ -55,7 +55,8 @@ class StoryContextBuilder {
     ..writeln(chapter.userChoice)
     ..divider();
 
-  String build() => _buffer.toString();
+  @override
+  String toString() => _buffer.toString();
 
   void clear() => _buffer.clear();
 }

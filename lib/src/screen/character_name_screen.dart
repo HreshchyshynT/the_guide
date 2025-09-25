@@ -5,6 +5,7 @@ import "package:the_guide/src/prompt/intro_prompt.dart";
 import "package:the_guide/src/model/app_config.dart";
 import "package:the_guide/src/model/game_state.dart";
 import "package:the_guide/src/model/story_intro.dart";
+import "package:the_guide/src/screen/chapter_screen.dart";
 import "package:the_guide/src/widget/edit_text.dart";
 import "package:the_guide/src/widget/guide_progress_widget.dart";
 import "package:the_guide/src/widget/llm_text_widget.dart";
@@ -102,8 +103,14 @@ class _CharacterNameScreenState extends State<CharacterNameScreen> {
                       // TODO: add min length limitation
                       if (name.isEmpty) return;
                       final confirmed = await _displayConfirmStartDialog(name);
+                      if (!context.mounted) return;
                       if (confirmed == true) {
-                        // TODO: move on
+                        final gameState = context.read<GameState>();
+                        gameState.characterName = name;
+                        ChapterScreen.pushReplacement(
+                          context,
+                          gameState,
+                        ).ignore();
                       } else {
                         editTextFocusNode.requestFocus();
                         _requestFocus().ignore();

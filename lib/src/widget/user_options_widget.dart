@@ -17,29 +17,62 @@ class UserOptionsWidget extends StatefulWidget {
 class _UserOptionsWidgetState extends State<UserOptionsWidget> {
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      children: widget.options
-          .map(
-            (e) => GestureDetector(
-              onTap: () => widget.onOptionSelected(e),
-              child: _OptionTextWidget(e),
+    final rows = <Row>[];
+    int i = 0;
+    final options = widget.options;
+    while (i < options.length) {
+      rows.add(
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: _OptionTextWidget(
+                text: options[i++],
+                onTap: widget.onOptionSelected,
+              ),
             ),
-          )
-          .toList(),
+            if (i < options.length)
+              Expanded(
+                child: _OptionTextWidget(
+                  text: options[i++],
+                  onTap: widget.onOptionSelected,
+                ),
+              ),
+          ],
+        ),
+      );
+    }
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: rows,
     );
   }
 }
 
 class _OptionTextWidget extends StatelessWidget {
-  const _OptionTextWidget(this.text);
+  const _OptionTextWidget({
+    required this.text,
+    required this.onTap,
+  });
 
   final String text;
+  final Function(String) onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
+    return GestureDetector(
+      onTap: () => onTap(text),
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: 8.0,
+          horizontal: 12.0,
+        ),
+        margin: const EdgeInsets.all(2.0),
+        decoration: BoxDecoration(border: BoxBorder.all()),
+        child: Text(
+          text,
+        ),
+      ),
     );
   }
 }
