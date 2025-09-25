@@ -2,13 +2,14 @@ import "package:collection/collection.dart";
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 import "package:the_guide/src/ai/ai_client.dart";
-import "package:the_guide/src/ai/model/schema.dart";
 import "package:the_guide/src/ai/structured_wrapper.dart";
 import "package:the_guide/src/model/app_config.dart";
+import "package:the_guide/src/model/chapter.dart";
 import "package:the_guide/src/model/chapter_response.dart";
 import "package:the_guide/src/model/game_state.dart";
 import "package:the_guide/src/prompt/story_context_builder.dart";
 import "package:the_guide/src/prompt/system_prompt.dart";
+import "package:the_guide/src/screen/welcome_screen.dart";
 import "package:the_guide/src/widget/guide_progress_widget.dart";
 import "package:the_guide/src/widget/llm_text_widget.dart";
 import "package:the_guide/src/widget/user_options_widget.dart";
@@ -92,10 +93,15 @@ class _ChapterScreenState extends State<ChapterScreen> {
                   horizontal: 24.0,
                   vertical: 16.0,
                 ),
-                child: UserOptionsWidget(
-                  options: data.choices,
-                  onOptionSelected: _onOptionSelected,
-                ),
+                child: data.choices.isNotEmpty
+                    ? UserOptionsWidget(
+                        options: data.choices,
+                        onOptionSelected: _onOptionSelected,
+                      )
+                    : TextButton(
+                        onPressed: _theEnd,
+                        child: const Text("The end"),
+                      ),
               ),
             ],
           );
@@ -116,5 +122,33 @@ class _ChapterScreenState extends State<ChapterScreen> {
     storyFuture = aiClient.generateContent(builder.toString());
   }
 
-  void _onOptionSelected(String option) {}
+  void _onOptionSelected(String option) async {
+    final response = await storyFuture!;
+    final chapter = Chapter(text: response.narration, userChoice: option);
+    if (!mounted) return;
+    final GameState gameState = context.read();
+    gameState.addChapter(chapter);
+    ChapterScreen.pushReplacement(context, gameState).ignore();
+  }
+
+  void _theEnd() async {
+    final response = await storyFuture!;
+    final chapter = Chapter(text: response.narration);
+    if (!mounted) return;
+    final GameState gameState = context.read();
+    gameState.addChapter(chapter);
+
+    // TODO: temporary solution
+    // TODO: implement saving logs or prompt user to save story
+    final builder = StoryContextBuilder()..addIntro(gameState.intro);
+
+    if (gameState.characterName != null) {
+      builder.addCharacterName(gameState.characterName!);
+    }
+    gameState.chapters.forEachIndexed(builder.addChapter);
+
+    print(builder.toString());
+
+    WelcomeScreen.pushAsRoot(context).ignore();
+  }
 }

@@ -5,8 +5,8 @@ class GameState {
   GameState({
     required this.intro,
     this.characterName,
-    List<Chapter> completedChapters = const [],
-  }) : _chapters = completedChapters;
+    List<Chapter>? completedChapters,
+  }) : _chapters = completedChapters ?? [];
 
   final StoryIntro intro;
   final List<Chapter> _chapters;
@@ -16,4 +16,6 @@ class GameState {
   List<Chapter> get chapters => List.unmodifiable(_chapters);
 
   int get chaptersCount => _chapters.length;
+
+  void addChapter(Chapter chapter) => _chapters.add(chapter);
 }

@@ -28,8 +28,8 @@ abstract class ChapterResponse with _$ChapterResponse {
               nullable: false,
             ),
             description:
-                "An array of **2–5** strings. Each string represents a distinct, actionable decision for the player to make next.",
-            minItems: 2,
+                "An array of **0–5** strings. Each string represents a distinct, actionable decision for the player to make next. \nStandard Turn: Provide 2-4 choices. \nPenultimate Turn: Provide exactly one choice. \nFinal Turn: Provide an empty array ([]).",
+            minItems: 0,
             maxItems: 5,
           ),
         },

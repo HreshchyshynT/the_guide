@@ -5,6 +5,14 @@ import "package:the_guide/src/screen/choose_story_screen.dart";
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
+  static Future<void> pushAsRoot(BuildContext context) =>
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const WelcomeScreen(),
+        ),
+        (_) => false,
+      );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

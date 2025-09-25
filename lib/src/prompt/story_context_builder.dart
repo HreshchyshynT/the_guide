@@ -47,13 +47,20 @@ class StoryContextBuilder {
       ..divider();
   }
 
-  void addChapter(int number, Chapter chapter) => _buffer
-    ..writeln("### TURN $number: NARRATION")
-    ..writeln(chapter.text)
-    ..writeln()
-    ..writeln("### TURN $number: PLAYER CHOICE")
-    ..writeln(chapter.userChoice)
-    ..divider();
+  void addChapter(int number, Chapter chapter) {
+    _buffer
+      ..writeln("### TURN $number: NARRATION")
+      ..writeln(chapter.text)
+      ..writeln();
+    if (chapter.userChoice == null) {
+      _buffer.divider();
+      return;
+    }
+    _buffer
+      ..writeln("### TURN $number: PLAYER CHOICE")
+      ..writeln(chapter.userChoice)
+      ..divider();
+  }
 
   @override
   String toString() => _buffer.toString();
