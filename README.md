@@ -1,6 +1,6 @@
 # The Guide
 
-This is a simple, terminal-based text adventure game built with Dart. The entire story, from the initial scenario to the consequences of your choices, is generated dynamically by a Large Language Model (LLM) like Google's Gemini or OpenAI's GPT.
+This is a simple, text adventure game built with Dart. The entire story, from the initial scenario to the consequences of your choices, is generated dynamically by a Large Language Model (LLM) like Google's Gemini or OpenAI's GPT.
 
 ### How it Works
 
