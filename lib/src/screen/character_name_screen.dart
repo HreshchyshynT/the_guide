@@ -164,9 +164,6 @@ class _CharacterNameScreenState extends State<CharacterNameScreen> {
       (response) async {
         setState(() {
           story = response;
-        });
-        await Future.delayed(const Duration(seconds: 5));
-        setState(() {
           isInputVisible = true;
           editTextFocusNode.requestFocus();
         });

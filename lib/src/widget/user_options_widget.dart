@@ -17,28 +17,31 @@ class UserOptionsWidget extends StatefulWidget {
 class _UserOptionsWidgetState extends State<UserOptionsWidget> {
   @override
   Widget build(BuildContext context) {
-    final rows = <Row>[];
+    final rows = <Widget>[];
     int i = 0;
     final options = widget.options;
     while (i < options.length) {
       rows.add(
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(
-              child: _OptionTextWidget(
-                text: options[i++],
-                onTap: widget.onOptionSelected,
-              ),
-            ),
-            if (i < options.length)
+        IntrinsicHeight(
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
               Expanded(
                 child: _OptionTextWidget(
                   text: options[i++],
                   onTap: widget.onOptionSelected,
                 ),
               ),
-          ],
+              if (i < options.length)
+                Expanded(
+                  child: _OptionTextWidget(
+                    text: options[i++],
+                    onTap: widget.onOptionSelected,
+                  ),
+                ),
+            ],
+          ),
         ),
       );
     }
