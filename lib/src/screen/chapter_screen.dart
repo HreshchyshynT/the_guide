@@ -1,4 +1,7 @@
+import "dart:convert";
+
 import "package:collection/collection.dart";
+import "package:file_saver/file_saver.dart";
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 import "package:the_guide/src/ai/ai_client.dart";
@@ -57,6 +60,12 @@ class _ChapterScreenState extends State<ChapterScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text("Chapter ${gameState.chaptersCount + 1}"),
+        actions: [
+          IconButton(
+            onPressed: _saveStory,
+            icon: const Icon(Icons.save),
+          ),
+        ],
       ),
       body: FutureBuilder(
         future: storyFuture,
@@ -138,8 +147,16 @@ class _ChapterScreenState extends State<ChapterScreen> {
     final GameState gameState = context.read();
     gameState.addChapter(chapter);
 
-    // TODO: temporary solution
-    // TODO: implement saving logs or prompt user to save story
+    WelcomeScreen.pushAsRoot(context).ignore();
+  }
+
+  void _saveStory() async {
+    final response = await storyFuture!;
+    final chapter = Chapter(text: response.narration);
+    if (!mounted) return;
+    final GameState gameState = context.read();
+    gameState.addChapter(chapter);
+
     final builder = StoryContextBuilder()..addIntro(gameState.intro);
 
     if (gameState.characterName != null) {
@@ -147,8 +164,16 @@ class _ChapterScreenState extends State<ChapterScreen> {
     }
     gameState.chapters.forEachIndexed(builder.addChapter);
 
-    print(builder.toString());
-
-    WelcomeScreen.pushAsRoot(context).ignore();
+    await FileSaver.instance
+        .saveFile(
+          name: gameState.intro.title,
+          bytes: utf8.encode(builder.toString()),
+          fileExtension: "txt",
+          mimeType: MimeType.text,
+        )
+        .then(
+          (_) => print("file saved"),
+          onError: (e) => print("Saving file error: $e"),
+        );
   }
 }
