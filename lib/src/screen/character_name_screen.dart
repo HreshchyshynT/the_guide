@@ -90,6 +90,7 @@ class _CharacterNameScreenState extends State<CharacterNameScreen> {
                   opacity: isInputVisible ? 1.0 : 0.0,
                   child: EditText(
                     hintText: "Enter your name",
+                    maxInputLength: 15,
                     textInputAction: TextInputAction.done,
                     controller: editTextController,
                     contentPadding: const EdgeInsets.all(16.0),
