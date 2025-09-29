@@ -2,6 +2,8 @@
 
 This is a simple, text adventure game built with Dart. The entire story, from the initial scenario to the consequences of your choices, is generated dynamically by a Large Language Model (LLM) like Google's Gemini or OpenAI's GPT.
 
+Developed for MacOS and I didn't test it on different platforms.
+
 ### How it Works
 
 * **AI Game Master:** The core of the game is an LLM that acts as the storyteller and game master.
@@ -18,19 +20,25 @@ This is a simple, text adventure game built with Dart. The entire story, from th
     cd the_guide
     ```
 
-2.  **Set up environment variables:**
+2. **Use [FVM](https://fvm.app/) to install required sdk version
+    ```bash
+    fvm install
+    ```
+
+
+3.  **Set up environment variables:**
     * Create a file named `.env` in the root of the project.
     * Add your LLM API key to it:
     ```
     API_KEY="YOUR_API_KEY_HERE"
     ```
 
-3.  **Install dependencies:**
+4.  **Install dependencies:**
     ```bash
-    dart pub get
+    fvm flutter pub get
     ```
 
-4.  **Run the application:**
+5.  **Run the application:**
     ```bash
-    dart run
+    fvm flutter run -d macos
     ```
